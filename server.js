@@ -8,25 +8,23 @@ const nodemailer = require("nodemailer");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.options("*", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "https://multispeciality-hospital-eight.vercel.app");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.sendStatus(200);
-});
+// ✅ CORS Middleware (Fix)
+app.use(cors({
+    origin: "https://multispeciality-hospital-eight.vercel.app",
+    methods: "GET, POST, PUT, DELETE",
+    allowedHeaders: "Content-Type"
+}));
 
+// Middleware
 app.use(express.json());
 app.use(bodyParser.json());
 
-// Connect to MongoDB
+// ✅ Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ Connected to MongoDB"))
     .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
-
-
-// Define Schema and Model
+// ✅ Define Schema and Model
 const ContactSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -36,7 +34,7 @@ const ContactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model("Contact", ContactSchema);
 
-// Nodemailer Transporter
+// ✅ Nodemailer Transporter
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -45,12 +43,12 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Test Route
+// ✅ Test Route
 app.get("/", (req, res) => {
     res.send("API is running...");
 });
 
-// Handle Contact Form Submission
+// ✅ Handle Contact Form Submission
 app.post("/contact", async (req, res) => {
     try {
         const { name, email, message } = req.body;
@@ -71,10 +69,15 @@ app.post("/contact", async (req, res) => {
 
         res.status(200).json({ message: "Message received. Thank you email sent!" });
     } catch (error) {
-        console.error(error);
+        console.error("❌ Error:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
-// Start Server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ✅ Start Server
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
+
+// ✅ Correctly Export App for Vercel
+module.exports = app;
