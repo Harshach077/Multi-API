@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "https://multispeciality-hospital-eight.vercel.app/",
+  origin: "https://multispeciality-hospital-eight.vercel.app",
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type"
 }));
