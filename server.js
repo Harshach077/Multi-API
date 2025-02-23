@@ -21,13 +21,11 @@ app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ Connected to MongoDB"))
+    .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
 
-.then(() => console.log("✅ Connected to MongoDB Atlas"))
-.catch(err => {
-    console.error("❌ MongoDB Connection Error:", err.message);
-    console.error(err);
-});
+
 // Define Schema and Model
 const ContactSchema = new mongoose.Schema({
     name: String,
