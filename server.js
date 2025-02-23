@@ -24,9 +24,11 @@ mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log("Connected to MongoDB"))
-.catch(err => console.log("MongoDB Connection Error:", err));
-
+.then(() => console.log("✅ Connected to MongoDB Atlas"))
+.catch(err => {
+    console.error("❌ MongoDB Connection Error:", err.message);
+    console.error(err);
+});
 // Define Schema and Model
 const ContactSchema = new mongoose.Schema({
     name: String,
