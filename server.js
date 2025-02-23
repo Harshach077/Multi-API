@@ -20,9 +20,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 // ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("✅ Connected to MongoDB"))
-    .catch(err => console.error("❌ MongoDB Connection Error:", err));
+mongoose.connect(process.env.MONGO_URI, {
+    dbName: "Multispeciality_platform"
+}).then(() => console.log("✅ Connected to MongoDB"))
+.catch(err => console.error("❌ MongoDB Connection Error:", err));
 
 // ✅ Define Schema and Model
 const ContactSchema = new mongoose.Schema({
