@@ -9,11 +9,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-    origin: "https://multispeciality-hospital-eight.vercel.app",
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type"
-}));
+app.options("*", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "https://multispeciality-hospital-eight.vercel.app");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.sendStatus(200);
+});
+
 app.use(express.json());
 app.use(bodyParser.json());
 
