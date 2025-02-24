@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 // ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect("mongodb+srv://harshach7523:harshach9353@harsha.ys6tu.mongodb.net/Hospital_DB", {
     dbName: "Multispeciality_platform"
 }).then(() => console.log("✅ Connected to MongoDB"))
 .catch(err => console.error("❌ MongoDB Connection Error:", err));
@@ -39,8 +39,8 @@ const Contact = mongoose.model("Contact", ContactSchema);
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: "harshach.mca24@bmsce.ac.in",
+        pass: "ychy xrnizuhltqdj",
     }
 });
 
@@ -60,7 +60,7 @@ app.post("/contact", async (req, res) => {
 
         // Send Confirmation Email
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: "harshach.mca24@bmsce.ac.in",
             to: email,
             subject: "Thank You for Contacting Us",
             text: `Dear ${name},\n\nThank you for reaching out! We have received your message and will get back to you soon.\n\nBest Regards,\nMultispeciality Health Care Platform`
